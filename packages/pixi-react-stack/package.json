@@ -1,0 +1,27 @@
+{
+  "name": "@fustilio/pixi-react-stack",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@pixi/layout": "catalog:pixi",
+    "@pixi/react": "catalog:pixi",
+    "@pixi/text": "catalog:pixi",
+    "@pixi/tilemap": "catalog:pixi",
+    "@pixi/ui": "catalog:pixi",
+    "pixi-viewport": "catalog:pixi",
+    "pixi.js": "catalog:pixi",
+    "react": "catalog:react",
+    "react-dom": "catalog:react"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:react",
+    "@types/react-dom": "catalog:react",
+    "typescript": "^5.9.2"
+  }
+}
