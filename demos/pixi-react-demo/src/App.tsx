@@ -1,4 +1,4 @@
-import { PixiReactDemo } from "./game";
+import { PixiReactDemo } from "./components/demo";
 
 function App() {
   return (

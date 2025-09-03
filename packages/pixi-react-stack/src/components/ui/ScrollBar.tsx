@@ -175,8 +175,7 @@ export function ScrollBar({
 
         const easingFn = getEasingFunction();
         const easedProgress = easingFn(progress);
-        const currentValue =
-          animationStartValueRef.current +
+        const currentValue = animationStartValueRef.current +
           (animationTargetValueRef.current - animationStartValueRef.current) *
             easedProgress;
 
@@ -219,8 +218,9 @@ export function ScrollBar({
   // Thumb position in pixels along the track (using animated value for smooth movement)
   const thumbPos = useMemo(() => {
     const travel = Math.max(0, trackLength - effectiveThumbSize);
-    const valueToUse =
-      enableEasing && !dragging ? animatedValue : internalValue;
+    const valueToUse = enableEasing && !dragging
+      ? animatedValue
+      : internalValue;
     const basePos = trackStart + valueToUse * travel;
     // Add visual offset during dragging (like MUI's transform)
     return dragging ? basePos + visualOffset : basePos;
@@ -272,8 +272,7 @@ export function ScrollBar({
       const pos = isHorizontal ? local.x : local.y;
       // Calculate offset from the start of the thumb using the current actual position
       // Use internalValue (not animated) for consistent offset calculation
-      const currentThumbPos =
-        trackStart +
+      const currentThumbPos = trackStart +
         internalValue * Math.max(0, trackLength - effectiveThumbSize);
       const offset = pos - currentThumbPos;
       setDragOffset(offset);
@@ -294,8 +293,7 @@ export function ScrollBar({
 
     if (dragging) {
       // Calculate the final value based on the visual position
-      finalValue =
-        internalValue +
+      finalValue = internalValue +
         visualOffset / Math.max(0, trackLength - effectiveThumbSize);
       finalValue = Math.max(0, Math.min(1, finalValue));
 
@@ -339,8 +337,7 @@ export function ScrollBar({
       if (dragging) {
         // Handle thumb dragging (original behavior)
         // Calculate the visual offset from the base position (like MUI's transform)
-        const basePos =
-          trackStart +
+        const basePos = trackStart +
           internalValue * Math.max(0, trackLength - effectiveThumbSize);
         const newVisualOffset = pos - basePos - dragOffset;
 
@@ -375,7 +372,7 @@ export function ScrollBar({
           const clampedValue = Math.max(0, Math.min(1, targetValue));
 
           // Debug logging to identify the issue
-          console.log('Track drag debug:', {
+          console.log("Track drag debug:", {
             pos,
             targetPos,
             clampedPos,
@@ -386,14 +383,16 @@ export function ScrollBar({
             targetValue,
             clampedValue,
             currentInternalValue: internalValue,
-            direction: clampedValue > lastTrackValueRef.current ? 'forward' : 'backward'
+            direction: clampedValue > lastTrackValueRef.current
+              ? "forward"
+              : "backward",
           });
 
           // Prevent vibration by only updating if the change is significant enough
           const threshold = 0.005; // Minimum change required to update (0.5%)
           if (Math.abs(clampedValue - lastTrackValueRef.current) > threshold) {
             lastTrackValueRef.current = clampedValue;
-            
+
             // Update position immediately during track drag
             if (onTrackJump) {
               onTrackJump(clampedValue);

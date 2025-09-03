@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Viewport as PixiViewport } from "pixi-viewport";
 import type { MovedEvent, ZoomedEvent } from "pixi-viewport/dist/types";
 
-import { Viewport } from "../components/ui/Viewport";
+import { Viewport } from "@fustilio/pixi-react-stack/ui";
 
 export function ViewportDemoTwo() {
   // Viewport state

@@ -1,11 +1,10 @@
 import "@pixi/layout/react";
 import "@pixi/layout";
 
-import { useEffect, useRef, useState } from "react";
-import type { ReactNode } from "react";
-import { LayoutContainer } from "@pixi/layout/components";
-import { Application, extend, useApplication } from "@pixi/react";
-import { Container, Graphics, Sprite, Text } from "pixi.js";
+import { useState } from "react";
+import { Application } from "@pixi/react";
+
+import { LayoutResizer } from "@fustilio/pixi-react-stack/layout";
 
 import { BunnySprite } from "./BunnySprite";
 import { DebugOverlay } from "./DebugOverlay";
@@ -14,67 +13,6 @@ import { DebugOverlay } from "./DebugOverlay";
 const ARTIFACT_SIZE = 32;
 const MARGIN = 24;
 const PADDING = 12;
-
-extend({
-  Container,
-  Text,
-  Graphics,
-  Sprite,
-  LayoutContainer,
-  // Add any other Pixi classes used in JSX here
-});
-
-type LayoutResizerProps = {
-  children:
-    | ((dimensions: { width: number; height: number }) => ReactNode)
-    | ReactNode;
-};
-
-function LayoutResizer({ children }: LayoutResizerProps) {
-  const layoutRef = useRef<Container>(null);
-  const { app } = useApplication();
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-
-  useEffect(() => {
-    if (!app.renderer) {
-      // renderer is not ready yet
-      return;
-    }
-    const resizeListener = () => {
-      const { width, height } = app.screen;
-      setDimensions({ width, height });
-      if (layoutRef.current) {
-        layoutRef.current.layout = {
-          width,
-          height,
-        };
-      }
-    };
-
-    app.renderer.on("resize", resizeListener);
-    // Call resizeListener once to set the initial layout
-    resizeListener();
-    return () => {
-      app.renderer.off("resize", resizeListener);
-    };
-  }, [app, app.renderer]);
-
-  // Pass dimensions as prop to children via React.cloneElement if needed
-  // For now, just render children and expose dimensions via context
-  return (
-    <pixiContainer ref={layoutRef}>
-      {typeof children === "function"
-        ? (
-            children as (dimensions: {
-              width: number;
-              height: number;
-            }) => ReactNode
-          )(dimensions)
-        : children}
-    </pixiContainer>
-  );
-}
-
 
 // Helper to draw margin and padding boxes centered at (cx, cy)
 function drawMarginAndPaddingBox(

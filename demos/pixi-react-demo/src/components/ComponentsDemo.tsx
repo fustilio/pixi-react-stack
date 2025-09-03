@@ -2,8 +2,9 @@ import { useCallback, useMemo, useState } from "react";
 import { useApplication } from "@pixi/react";
 import { Container, Graphics } from "pixi.js";
 
-import { List, ScrollBox, ScrollBar } from "../components/ui";
+import { List, ScrollBar } from "@fustilio/pixi-react-stack/ui";
 import { ViewportDemoTwo } from "./ViewportDemoTwo";
+import { ScrollBoxDemo } from "./ScrollBoxDemo";
 
 export function ComponentsDemo() {
   const { app } = useApplication();
@@ -12,7 +13,7 @@ export function ComponentsDemo() {
   // Demo state
   const [selectedDemo, setSelectedDemo] = useState<
     "list" | "scrollbox" | "scrollbar" | "viewport"
-  >("list");
+  >("scrollbox");
   const [scrollBarH, setScrollBarH] = useState(0.25);
   const [scrollBarV, setScrollBarV] = useState(0.6);
 
@@ -223,103 +224,7 @@ export function ComponentsDemo() {
           </pixiContainer>
         )}
 
-        {selectedDemo === "scrollbox" && (
-          <pixiContainer>
-            {/* ScrollBox Demo */}
-            <pixiText
-              text="ScrollBox Component - Horizontal Scrolling"
-              x={0}
-              y={-20}
-              style={{
-                fill: 0xffffff,
-                fontSize: 18,
-                fontFamily: "Arial",
-                fontWeight: "bold",
-              }}
-            />
-
-            <pixiContainer x={0} y={20}>
-              <layoutContainer
-                layout={{
-                  width: 600,
-                  height: 300,
-                  backgroundColor: 0x34495e,
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <layoutView
-                  layout={{
-                    width: 500,
-                    height: 200,
-                    backgroundColor: "green",
-                  }}
-                >
-                  <ScrollBox
-                    width={500}
-                    height={200}
-                    worldWidth={1000}
-                    worldHeight={180}
-                    // onScroll={handleScroll}
-                  >
-                    {/* <List items={demoContainers3} type="horizontal" ></List> */}
-                    <layoutContainer
-                      layout={{
-                        width: 1000,
-                        height: 180,
-                        backgroundColor: "ff0000aa",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "flex-start",
-                        gap: 20,
-                      }}
-                    >
-                      {["88", "99", "aa", "bb", "cc", "dd", "ee", "ff"].map(
-                        (i) => (
-                          <layoutView
-                            key={i}
-                            layout={{
-                              width: 50,
-                              height: 50,
-                              backgroundColor: `#00${i}00aa`,
-                            }}
-                          ></layoutView>
-                        )
-                      )}
-                    </layoutContainer>
-                  </ScrollBox>
-                </layoutView>
-              </layoutContainer>
-            </pixiContainer>
-
-            {/* <pixiText
-              text="ScrollBox Component - Bidirectional Scrolling"
-              x={0}
-              y={250}
-              style={{
-                fill: 0xffffff,
-                fontSize: 18,
-                fontFamily: "Arial",
-                fontWeight: "bold",
-              }}
-            /> */}
-
-            <pixiContainer x={0} y={290}>
-              {/* <ScrollBox
-                width={400}
-                height={300}
-                type="bidirectional"
-                background={0x2c3e50}
-                radius={10}
-                items={demoContainers4}
-                onScroll={handleScroll}
-                elementsMargin={15}
-                padding={20}
-              /> */}
-            </pixiContainer>
-          </pixiContainer>
-        )}
+        {selectedDemo === "scrollbox" && <ScrollBoxDemo />}
 
         {selectedDemo === "scrollbar" && (
           <pixiContainer>

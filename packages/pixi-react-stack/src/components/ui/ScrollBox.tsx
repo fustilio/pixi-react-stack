@@ -132,7 +132,7 @@ export function ScrollBox({
 
       viewportAnimationRef.current = requestAnimationFrame(animate);
     },
-    [enableEasing, easingDuration, getViewportEasingFunction],
+    [enableEasing, easingDuration, getViewportEasingFunction]
   );
   const scheduleScrollEnd = useCallback(
     (v: number) => {
@@ -146,19 +146,19 @@ export function ScrollBox({
       }, SCROLL_END_TIMEOUT);
       scrollEndTimerRef.current = id as unknown as number;
     },
-    [onScrollEnd],
+    [onScrollEnd]
   );
 
   const leftToValue = useCallback(
     (left: number) =>
       maxLeft <= 0 ? 0 : Math.max(0, Math.min(1, left / maxLeft)),
-    [maxLeft],
+    [maxLeft]
   );
 
   const valueToLeft = useCallback(
     (value: number) =>
       maxLeft <= 0 ? 0 : Math.max(0, Math.min(maxLeft, value * maxLeft)),
-    [maxLeft],
+    [maxLeft]
   );
 
   const updateFromViewport = useCallback(() => {
@@ -185,7 +185,7 @@ export function ScrollBox({
       animateViewportToLeft(nextLeft, immediate);
       setScrollValue(value);
     },
-    [valueToLeft, animateViewportToLeft],
+    [valueToLeft, animateViewportToLeft]
   );
 
   const stepBy = useCallback(
@@ -210,7 +210,7 @@ export function ScrollBox({
       onScrollStart,
       scheduleScrollEnd,
       animateViewportToLeft,
-    ],
+    ]
   );
 
   // External API for smooth scrolling
@@ -234,14 +234,14 @@ export function ScrollBox({
       isScrolling,
       onScrollStart,
       scheduleScrollEnd,
-    ],
+    ]
   );
 
   const scrollToValue = useCallback(
     (value: number, immediate = false) => {
       moveViewportToValue(value, immediate);
     },
-    [moveViewportToValue],
+    [moveViewportToValue]
   );
 
   // Direct viewport movement for follow mode - bypasses easing but updates scroll state
@@ -251,7 +251,7 @@ export function ScrollBox({
       if (!viewport) return;
 
       const clampedLeft = Math.max(0, Math.min(maxLeft, left));
-      
+
       // Prevent moving to 0 if we're already scrolled and this would reset the scroll
       if (clampedLeft === 0 && scrollValue > 0.01 && left === 0) {
         console.log("⚠️ Preventing moveViewportDirect reset to 0", {
@@ -262,7 +262,7 @@ export function ScrollBox({
         });
         return;
       }
-      
+
       // Move viewport directly without animation
       viewport.moveCorner(clampedLeft, viewport.top ?? 0);
 
@@ -270,7 +270,7 @@ export function ScrollBox({
       const value = leftToValue(clampedLeft);
       setScrollValue(value);
     },
-    [maxLeft, leftToValue, scrollValue],
+    [maxLeft, leftToValue, scrollValue]
   );
 
   // Use refs to store stable API functions to prevent recreation
@@ -291,7 +291,7 @@ export function ScrollBox({
         scrollToValueRef.current(value, immediate),
       moveViewportDirect: (left: number) => moveViewportDirectRef.current(left),
     }),
-    [],
+    []
   ); // Empty dependency array since we use refs
 
   // Thumb size proportional to visible fraction
@@ -311,7 +311,7 @@ export function ScrollBox({
       moveViewportToValue(v, true);
       scheduleScrollEnd(v);
     },
-    [isScrolling, onScrollStart, moveViewportToValue, scheduleScrollEnd],
+    [isScrolling, onScrollStart, moveViewportToValue, scheduleScrollEnd]
   );
 
   const handleChangeEnd = useCallback(
@@ -323,7 +323,7 @@ export function ScrollBox({
       moveViewportToValue(v, true);
       scheduleScrollEnd(v);
     },
-    [moveViewportToValue, scheduleScrollEnd, scrollValue],
+    [moveViewportToValue, scheduleScrollEnd, scrollValue]
   );
 
   // Expose viewport reference and API to parent
@@ -344,7 +344,7 @@ export function ScrollBox({
       moveViewportToValue(v, true);
       scheduleScrollEnd(v);
     },
-    [isScrolling, onScrollStart, moveViewportToValue, scheduleScrollEnd],
+    [isScrolling, onScrollStart, moveViewportToValue, scheduleScrollEnd]
   );
 
   // Cleanup viewport animation on unmount
@@ -359,8 +359,6 @@ export function ScrollBox({
     };
   }, []);
 
-
-
   return (
     <pixiContainer x={0} y={0} width={width} height={height}>
       <layoutContainer
@@ -374,7 +372,7 @@ export function ScrollBox({
           overflow: "hidden",
         }}
       >
-        <layoutView
+        <layoutContainer
           layout={{
             width: width,
             height: viewportHeight,
@@ -394,8 +392,8 @@ export function ScrollBox({
           >
             {children}
           </Viewport>
-        </layoutView>
-        <layoutView
+        </layoutContainer>
+        <layoutContainer
           layout={{
             width: width,
             height: isBarHidden ? 0 : barThickness,
@@ -427,7 +425,7 @@ export function ScrollBox({
               />
             </pixiContainer>
           )}
-        </layoutView>
+        </layoutContainer>
       </layoutContainer>
     </pixiContainer>
   );
