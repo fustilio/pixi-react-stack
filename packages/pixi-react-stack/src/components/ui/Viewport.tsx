@@ -16,35 +16,37 @@ import type { MovedEvent, ZoomedEvent } from "pixi-viewport/dist/types";
 import { Container } from "pixi.js";
 import { useDeepCompareMemo } from "use-deep-compare";
 
+export type ViewportProps = Omit<
+  PixiReactElementProps<typeof PixiViewport>,
+  "events"
+> & {
+  dragOptions?: IDragOptions;
+  wheelOptions?: IWheelOptions;
+  pinchOptions?: IPinchOptions;
+  bounceOptions?: IBounceOptions;
+  decelerateOptions?: IDecelerateOptions;
+  clampZoomOptions?: IClampZoomOptions;
+  followOptions?: IFollowOptions & {
+    targetRef: React.RefObject<Container>;
+  };
+  mouseEdgesOptions?: IMouseEdgesOptions;
+  clampOptions?: IClampOptions;
+  onBounceX?: (event: MovedEvent) => void;
+  onMoved?: (event: MovedEvent) => void;
+  onZoomed?: (event: ZoomedEvent) => void;
+  onBounceY?: (event: MovedEvent) => void;
+  onMouseEdgeStart?: (event: MovedEvent) => void;
+  onMouseEdgeEnd?: (event: MovedEvent) => void;
+  onMovedEnd?: (event: PixiViewport) => void;
+  ref?: React.ForwardedRef<PixiViewport>;
+};
+
 /**
  * simplified version of pixiViewport with convenience props
  */
-export function Viewport(
-  props: Omit<PixiReactElementProps<typeof PixiViewport>, "events"> & {
-    dragOptions?: IDragOptions;
-    wheelOptions?: IWheelOptions;
-    pinchOptions?: IPinchOptions;
-    bounceOptions?: IBounceOptions;
-    decelerateOptions?: IDecelerateOptions;
-    clampZoomOptions?: IClampZoomOptions;
-    followOptions?: IFollowOptions & {
-      targetRef: React.RefObject<Container>;
-    };
-    mouseEdgesOptions?: IMouseEdgesOptions;
-    clampOptions?: IClampOptions;
-    onBounceX?: (event: MovedEvent) => void;
-    onMoved?: (event: MovedEvent) => void;
-    onZoomed?: (event: ZoomedEvent) => void;
-    onBounceY?: (event: MovedEvent) => void;
-    onMouseEdgeStart?: (event: MovedEvent) => void;
-    onMouseEdgeEnd?: (event: MovedEvent) => void;
-    onMovedEnd?: (event: PixiViewport) => void;
-    ref?: React.ForwardedRef<PixiViewport>;
-  },
-) {
+export function Viewport(props: ViewportProps) {
   const {
     dragOptions,
-
     clampOptions,
     wheelOptions,
     pinchOptions,
@@ -73,7 +75,7 @@ export function Viewport(
 
   const stableDragOptions = useDeepCompareMemo(
     () => dragOptions,
-    [dragOptions],
+    [dragOptions]
   );
   const stableClampOptions = useDeepCompareMemo(
     () => ({
@@ -83,44 +85,45 @@ export function Viewport(
       bottom: rest.worldHeight,
       ...clampOptions,
     }),
-    [clampOptions],
+    [clampOptions]
   );
   const stableWheelOptions = useDeepCompareMemo(
     () => wheelOptions,
-    [wheelOptions],
+    [wheelOptions]
   );
 
   const stablePinchOptions = useDeepCompareMemo(
     () => pinchOptions,
-    [pinchOptions],
+    [pinchOptions]
   );
   const stableDecelerateOptions = useDeepCompareMemo(
     () => decelerateOptions,
-    [decelerateOptions],
+    [decelerateOptions]
   );
   const stableClampZoomOptions = useDeepCompareMemo(
     () => clampZoomOptions || { minScale: 0.1, maxScale: 5 },
-    [clampZoomOptions],
+    [clampZoomOptions]
   );
   const stableBounceOptions = useDeepCompareMemo(
     () => bounceOptions,
-    [bounceOptions],
+    [bounceOptions]
   );
   const stableFollowOptions = useDeepCompareMemo(
     () => followOptions,
-    [followOptions],
+    [followOptions]
   );
   const stableMouseEdgesOptions = useDeepCompareMemo(
     () => ({
       ...mouseEdgesOptions,
     }),
-    [mouseEdgesOptions],
+    [mouseEdgesOptions]
   );
   useEffect(() => {
     const currentRef = _ref.current;
     if (!currentRef) return;
 
-    currentRef.drag(stableDragOptions)
+    currentRef
+      .drag(stableDragOptions)
       .wheel(stableWheelOptions)
       .pinch(stablePinchOptions)
       .clamp(stableClampOptions)
@@ -136,7 +139,7 @@ export function Viewport(
     if (stableFollowOptions && stableFollowOptions.targetRef) {
       currentRef.follow(
         stableFollowOptions.targetRef.current,
-        stableFollowOptions,
+        stableFollowOptions
       );
     }
 

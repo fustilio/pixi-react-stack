@@ -20,7 +20,7 @@ catalogs:
     "@pixi/text": ^7.4.3
     "@pixi/tilemap": ^5.0.1
     pixi-viewport: ^6.0.3
-    pixi.js: ^8.12.1
+    pixi.js: ^8.13.0
   react:
     "@types/react": 19.1.8
     "@types/react-dom": 19.1.6

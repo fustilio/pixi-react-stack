@@ -1,12 +1,13 @@
 {
   "name": "@fustilio/pixi-react-stack",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "type": "module",
   "exports": {
     "./ui": "./src/components/ui/index.ts",
     "./layout": "./src/components/layout/index.ts"
   },
   "scripts": {
+    "dev": "vite",
     "clean": "rm -rf .turbo node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "typecheck": "tsc --noEmit"
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "typescript": "^5.9.2",
+    "vite": "^7.1.4",
     "vitest": "^3.2.4"
   }
 }

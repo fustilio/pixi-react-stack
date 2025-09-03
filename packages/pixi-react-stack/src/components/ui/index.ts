@@ -36,3 +36,6 @@ export type { ScrollBarOrientation, ScrollBarProps } from "./ScrollBar";
 
 export { Slider } from "./Slider";
 export type { SliderOptions } from "./Slider";
+
+export { Viewport } from "./Viewport";
+export type { ViewportProps } from "./Viewport";

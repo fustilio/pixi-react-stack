@@ -7,10 +7,10 @@ settings:
 catalogs:
   pixi:
     '@pixi/layout':
-      specifier: ^3.0.2
+      specifier: ^3.1.0
       version: 3.1.0
     '@pixi/react':
-      specifier: 8.0.2
+      specifier: ^8.0.3
       version: 8.0.2
     '@pixi/text':
       specifier: ^7.4.3
@@ -22,7 +22,7 @@ catalogs:
       specifier: ^6.0.3
       version: 6.0.3
     pixi.js:
-      specifier: ^8.10.1
+      specifier: ^8.13.0
       version: 8.13.0
 
 importers:
@@ -84,6 +84,9 @@ importers:
       typescript:
         specifier: ^5.9.2
         version: 5.9.2
+      vite:
+        specifier: ^7.1.4
+        version: 7.1.4(yaml@2.8.1)
       vitest:
         specifier: ^3.2.4
         version: 3.2.4(yaml@2.8.1)
