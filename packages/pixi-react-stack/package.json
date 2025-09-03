@@ -1,7 +1,6 @@
 {
   "name": "@fustilio/pixi-react-stack",
   "version": "0.1.0",
-  "private": true,
   "type": "module",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
@@ -13,7 +12,6 @@
     "@pixi/react": "catalog:pixi",
     "@pixi/text": "catalog:pixi",
     "@pixi/tilemap": "catalog:pixi",
-    "@pixi/ui": "catalog:pixi",
     "pixi-viewport": "catalog:pixi",
     "pixi.js": "catalog:pixi",
     "react": "catalog:react",
