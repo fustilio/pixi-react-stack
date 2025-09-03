@@ -297,6 +297,7 @@ export class List<C extends ContainerChild = ContainerChild> extends Container<C
 
         if (this.rightPadding)
         {
+            //@ts-ignore
             maxWidth -= this.rightPadding;
         }
 
@@ -323,6 +324,7 @@ export class List<C extends ContainerChild = ContainerChild> extends Container<C
                     child.x = x;
                     child.y = y;
 
+                    // @ts-ignore
                     if (child.x + child.width > maxWidth && id > 0)
                     {
                         y += elementsMargin + maxHeight;
