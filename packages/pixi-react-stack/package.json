@@ -1,7 +1,11 @@
 {
   "name": "@fustilio/pixi-react-stack",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
+  "exports": {
+    "./ui": "./src/components/ui/index.ts",
+    "./layout": "./src/components/layout/index.ts"
+  },
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
@@ -13,13 +17,15 @@
     "@pixi/text": "catalog:pixi",
     "@pixi/tilemap": "catalog:pixi",
     "pixi-viewport": "catalog:pixi",
-    "pixi.js": "catalog:pixi",
+    "pixi.js": "catalog:pixi"
+  },
+  "peerDependencies": {
+    "@types/react": "catalog:react",
+    "@types/react-dom": "catalog:react",
     "react": "catalog:react",
     "react-dom": "catalog:react"
   },
   "devDependencies": {
-    "@types/react": "catalog:react",
-    "@types/react-dom": "catalog:react",
     "typescript": "^5.9.2"
   }
 }
