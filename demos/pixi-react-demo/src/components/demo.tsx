@@ -1,6 +1,3 @@
-import "@pixi/layout/react";
-import "@pixi/layout";
-
 import { Application } from "@pixi/react";
 
 import { LayoutResizer } from "@fustilio/pixi-react-stack/layout";

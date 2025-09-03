@@ -14,7 +14,7 @@ export function ComponentsDemo() {
   // Demo state
   const [selectedDemo, setSelectedDemo] = useState<
     "list" | "scrollbox" | "scrollbar" | "viewport" | "icon-button"
-  >("scrollbox");
+  >("list");
   const [scrollBarH, setScrollBarH] = useState(0.25);
   const [scrollBarV, setScrollBarV] = useState(0.6);
 

@@ -13,6 +13,8 @@ export default defineConfig({
     }),
   ],
   build: {
+    // Generate source maps for debugging
+    sourcemap: true,
     lib: {
       // Define multiple entry points for `ui` and `layout`
       entry: {
@@ -30,6 +32,7 @@ export default defineConfig({
         "@pixi/react",
         "pixi.js",
         "pixi-viewport",
+        "@pixi/layout",
       ],
       output: {
         globals: {
@@ -38,6 +41,7 @@ export default defineConfig({
           "@pixi/react": "PixiReact",
           "pixi.js": "PIXI",
           "pixi-viewport": "PixiViewport",
+          "@pixi/layout": "PixiLayout",
         },
       },
     },

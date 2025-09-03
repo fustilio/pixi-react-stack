@@ -1,11 +1,8 @@
-import "@pixi/layout/react";
-import "@pixi/layout";
-
 import { useRef, useState, useEffect, type ReactNode } from "react";
 import { Container, Text, Graphics, Sprite } from "pixi.js";
 import { useApplication, useExtend } from "@pixi/react";
-import { LayoutContainer, LayoutView } from "@pixi/layout/components";
 import { Viewport } from "pixi-viewport";
+import { LayoutContainer, LayoutView } from "@pixi/layout/components";
 
 type LayoutResizerProps = {
   children:

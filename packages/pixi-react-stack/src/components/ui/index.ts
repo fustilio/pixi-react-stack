@@ -1,3 +1,7 @@
+// Initialize layout system for UI components
+import "@pixi/layout/react";
+import "@pixi/layout";
+
 // Base layout components
 export { List } from "./List";
 export type { ListProps, ListType } from "./List";
