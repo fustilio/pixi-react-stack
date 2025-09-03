@@ -33,3 +33,6 @@ export type { IconButtonProps } from "./extended/icon-button";
 
 export { ScrollBar } from "./ScrollBar";
 export type { ScrollBarOrientation, ScrollBarProps } from "./ScrollBar";
+
+export { Slider } from "./Slider";
+export type { SliderOptions } from "./Slider";
