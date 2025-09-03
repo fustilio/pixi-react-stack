@@ -6,7 +6,7 @@ import { Button } from "../Button";
 export type IconButtonProps = {
   icon?: IconNode;
   text?: string;
-  onPress: () => void;
+  onPress?: () => void;
   disabled?: boolean;
   width?: number;
   height?: number;
@@ -45,7 +45,7 @@ export function IconButton({
           gap: 5,
         }}
       >
-        <layoutView
+        <layoutContainer
           layout={{
             width: icon ? 24 : 0,
             height: "100%",
@@ -60,8 +60,8 @@ export function IconButton({
               }}
             />
           )}
-        </layoutView>
-        <layoutView
+        </layoutContainer>
+        <layoutContainer
           layout={{
             width: text ? text.length * 6 : 0,
             height: 12,
@@ -80,7 +80,7 @@ export function IconButton({
               }}
             />
           )}
-        </layoutView>
+        </layoutContainer>
       </layoutContainer>
     </Button>
   );

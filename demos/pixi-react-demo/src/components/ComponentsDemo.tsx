@@ -2,9 +2,10 @@ import { useCallback, useMemo, useState } from "react";
 import { useApplication } from "@pixi/react";
 import { Container, Graphics } from "pixi.js";
 
-import { List, ScrollBar } from "@fustilio/pixi-react-stack/ui";
+import { IconButton, List, ScrollBar } from "@fustilio/pixi-react-stack/ui";
 import { ViewportDemoTwo } from "./ViewportDemoTwo";
 import { ScrollBoxDemo } from "./ScrollBoxDemo";
+import { Save } from "lucide";
 
 export function ComponentsDemo() {
   const { app } = useApplication();
@@ -12,7 +13,7 @@ export function ComponentsDemo() {
 
   // Demo state
   const [selectedDemo, setSelectedDemo] = useState<
-    "list" | "scrollbox" | "scrollbar" | "viewport"
+    "list" | "scrollbox" | "scrollbar" | "viewport" | "icon-button"
   >("scrollbox");
   const [scrollBarH, setScrollBarH] = useState(0.25);
   const [scrollBarV, setScrollBarV] = useState(0.6);
@@ -137,34 +138,34 @@ export function ComponentsDemo() {
 
       {/* Demo selector buttons */}
       <pixiContainer x={20} y={70}>
-        {(["list", "scrollbox", "scrollbar", "viewport"] as const).map(
-          (demo, index) => (
-            <pixiContainer key={demo} x={index * 120} y={0}>
-              <pixiGraphics
-                draw={(g) => {
-                  g.clear()
-                    .roundRect(0, 0, 100, 40, 8)
-                    .fill(selectedDemo === demo ? 0x3498db : 0x95a5a6)
-                    .stroke({ width: 2, color: 0xffffff });
-                }}
-                interactive={true}
-                onPointerDown={() => setSelectedDemo(demo)}
-              />
-              <pixiText
-                text={demo.charAt(0).toUpperCase() + demo.slice(1)}
-                x={50}
-                y={20}
-                anchor={0.5}
-                style={{
-                  fill: 0xffffff,
-                  fontSize: 14,
-                  fontFamily: "Arial",
-                  fontWeight: "bold",
-                }}
-              />
-            </pixiContainer>
-          )
-        )}
+        {(
+          ["list", "scrollbox", "scrollbar", "viewport", "icon-button"] as const
+        ).map((demo, index) => (
+          <pixiContainer key={demo} x={index * 120} y={0}>
+            <pixiGraphics
+              draw={(g) => {
+                g.clear()
+                  .roundRect(0, 0, 100, 40, 8)
+                  .fill(selectedDemo === demo ? 0x3498db : 0x95a5a6)
+                  .stroke({ width: 2, color: 0xffffff });
+              }}
+              interactive={true}
+              onPointerDown={() => setSelectedDemo(demo)}
+            />
+            <pixiText
+              text={demo.charAt(0).toUpperCase() + demo.slice(1)}
+              x={50}
+              y={20}
+              anchor={0.5}
+              style={{
+                fill: 0xffffff,
+                fontSize: 14,
+                fontFamily: "Arial",
+                fontWeight: "bold",
+              }}
+            />
+          </pixiContainer>
+        ))}
       </pixiContainer>
 
       {/* Demo content area */}
@@ -287,6 +288,22 @@ export function ComponentsDemo() {
         )}
 
         {selectedDemo === "viewport" && <ViewportDemoTwo />}
+        {selectedDemo === "icon-button" && (
+          <pixiContainer>
+            <pixiText
+              text="IconButton Component - Placeholder Demo"
+              x={0}
+              y={-20}
+              style={{
+                fill: 0xffffff,
+                fontSize: 18,
+                fontFamily: "Arial",
+                fontWeight: "bold",
+              }}
+            />
+            <IconButton icon={Save} />
+          </pixiContainer>
+        )}
       </pixiContainer>
 
       {/* Footer info */}
