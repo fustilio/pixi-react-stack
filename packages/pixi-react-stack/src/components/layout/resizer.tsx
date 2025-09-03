@@ -19,7 +19,6 @@ export function LayoutResizer({ children }: LayoutResizerProps) {
   const layoutRef = useRef<Container>(null);
   const { app } = useApplication();
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     if (!app.renderer) {
@@ -46,17 +45,11 @@ export function LayoutResizer({ children }: LayoutResizerProps) {
     };
   }, [app, app.renderer]);
 
-  useEffect(() => {
-    if (app.renderer) {
-      setReady(true);
-    }
-  }, [app.renderer]);
-
   // Pass dimensions as prop to children via React.cloneElement if needed
   // For now, just render children and expose dimensions via context
   return (
     <pixiContainer ref={layoutRef}>
-      {ready
+      {app.renderer
         ? typeof children === "function"
           ? (
               children as (dimensions: {
