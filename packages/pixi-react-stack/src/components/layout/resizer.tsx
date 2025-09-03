@@ -3,7 +3,8 @@ import "@pixi/layout";
 
 import { ReactNode, useRef, useState, useEffect } from "react";
 import { Container } from "pixi.js";
-import { useApplication } from "@pixi/react";
+import { useApplication, useExtend } from "@pixi/react";
+import { LayoutContainer } from "@pixi/layout/components";
 
 type LayoutResizerProps = {
   children:
@@ -12,6 +13,9 @@ type LayoutResizerProps = {
 };
 
 export function LayoutResizer({ children }: LayoutResizerProps) {
+  useExtend({
+    LayoutContainer,
+  });
   const layoutRef = useRef<Container>(null);
   const { app } = useApplication();
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
