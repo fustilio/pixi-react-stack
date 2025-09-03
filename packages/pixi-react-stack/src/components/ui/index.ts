@@ -3,7 +3,7 @@ export { List } from "./List";
 export type { ListProps, ListType } from "./List";
 
 export { ScrollBox } from "./ScrollBox";
-export type { ScrollBoxProps } from "./ScrollBox";
+export type { ScrollBoxProps, ScrollBoxAPI } from "./ScrollBox";
 
 // Timeline components are now in the timeline directory
 
