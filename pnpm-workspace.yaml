@@ -14,13 +14,13 @@ catalogs:
     jotai-history: ^0.2.1
     jotai-location: ^0.5.5
   pixi:
-    "@pixi/layout": ^3.0.2
-    "@pixi/react": 8.0.2
+    "@pixi/layout": ^3.1.0
+    "@pixi/react": ^8.0.3
     "@pixi/sound": ^6.0.1
     "@pixi/text": ^7.4.3
     "@pixi/tilemap": ^5.0.1
     pixi-viewport: ^6.0.3
-    pixi.js: ^8.10.1
+    pixi.js: ^8.12.1
   react:
     "@types/react": 19.1.8
     "@types/react-dom": 19.1.6
