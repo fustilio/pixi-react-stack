@@ -1,14 +1,18 @@
 {
   "name": "@fustilio/pixi-react-stack",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "type": "module",
   "exports": {
     "./ui": {
-      "default": "./dist/components/ui/index.js",
+      "require": "./dist/ui.cjs.js",
+      "import": "./dist/ui.es.js",
+      "default": "./dist/ui.cjs.js",
       "types": "./dist/components/ui/index.d.ts"
     },
     "./layout": {
-      "default": "./dist/components/layout/index.js",
+      "require": "./dist/layout.cjs.js",
+      "import": "./dist/layout.es.js",
+      "default": "./dist/layout.cjs.js",
       "types": "./dist/components/layout/index.d.ts"
     }
   },
