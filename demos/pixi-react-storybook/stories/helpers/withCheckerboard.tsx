@@ -1,16 +1,13 @@
-import { CheckerboardView } from "@fustilio/pixi-react-stack/storybook";
+import {
+  CheckerboardView,
+  CheckerboardViewProps,
+} from "@fustilio/pixi-react-stack/storybook";
 import React from "react";
 
-export function withCheckerboard(options: {
-  width: number;
-  height: number;
-  grids: number;
-}) {
+export function withCheckerboard(options: CheckerboardViewProps) {
   return (Story) => (
     <CheckerboardView
-      grids={options.grids}
-      width={options.width}
-      height={options.height}
+      {...options}
     >
       <Story />
     </CheckerboardView>

@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Container, FederatedPointerEvent } from "pixi.js";
+import { Container, FederatedPointerEvent, type ColorSource } from "pixi.js";
 
 import { Button } from "./Button";
+import { IconButton } from "./extended/icon-button";
+import { Triangle } from "lucide";
 
 const MIN_THUMB_SIZE = 16;
 // const TRACK_REPEAT_INTERVAL_MS = 200;
@@ -21,7 +23,7 @@ function ArrowIcon({
 }: {
   direction?: ArrowDirection;
   size?: number;
-  color?: number;
+  color?: ColorSource;
 }) {
   const rotation = useMemo(() => {
     switch (direction) {
@@ -38,18 +40,23 @@ function ArrowIcon({
   }, [direction]);
 
   return (
-    <pixiContainer rotation={rotation} width={size} height={size}>
+    <pixiContainer
+      rotation={rotation}
+      width={size}
+      height={size}
+      x={size / 2}
+      y={size / 2}
+    >
       <pixiGraphics
         draw={(g) => {
           g.clear();
-          g.beginFill(color);
           const h = size * 0.5;
           // Triangle pointing right, centered at (0,0)
-          g.moveTo(-h, -h * 0.8);
-          g.lineTo(-h, h * 0.8);
-          g.lineTo(h, 0);
-          g.closePath();
-          g.endFill();
+          g.moveTo(-h, -h * 0.8)
+            .lineTo(-h, h * 0.8)
+            .lineTo(h, 0)
+            .closePath()
+            .fill(color);
         }}
       />
     </pixiContainer>
@@ -69,10 +76,11 @@ export interface ScrollBarProps {
   /** Value between 0 and 1 representing thumb position along track */
   value?: number;
   /** Colors and visuals */
-  trackColor?: number;
+  trackColor?: ColorSource;
   trackAlpha?: number;
-  thumbColor?: number;
+  thumbColor?: ColorSource;
   thumbRadius?: number;
+  arrowColor?: ColorSource;
   /** Easing configuration */
   enableEasing?: boolean;
   easingDuration?: number; // ms
@@ -120,6 +128,7 @@ export function ScrollBar({
   // onPageDecrement,
   // onPageIncrement,
   onTrackJump,
+  arrowColor = 0xffffff,
 }: ScrollBarProps) {
   const containerRef = useRef<Container>(null);
   const [dragging, setDragging] = useState(false);
@@ -132,7 +141,7 @@ export function ScrollBar({
 
   const trackRepeatTimerRef = useRef<number | null>(null);
   const trackRepeatDirectionRef = useRef<"decrement" | "increment" | null>(
-    null,
+    null
   );
 
   // Easing animation state
@@ -175,7 +184,8 @@ export function ScrollBar({
 
         const easingFn = getEasingFunction();
         const easedProgress = easingFn(progress);
-        const currentValue = animationStartValueRef.current +
+        const currentValue =
+          animationStartValueRef.current +
           (animationTargetValueRef.current - animationStartValueRef.current) *
             easedProgress;
 
@@ -185,7 +195,7 @@ export function ScrollBar({
 
       animationRef.current = requestAnimationFrame(animate);
     },
-    [enableEasing, dragging, animatedValue, easingDuration, getEasingFunction],
+    [enableEasing, dragging, animatedValue, easingDuration, getEasingFunction]
   );
 
   // Keep internal value in sync with external (similar to MUI approach)
@@ -212,15 +222,14 @@ export function ScrollBar({
   const trackLength = Math.max(0, mainLength - arrow * 2);
   const effectiveThumbSize = Math.min(
     Math.max(thumbSize, MIN_THUMB_SIZE),
-    trackLength,
+    trackLength
   );
 
   // Thumb position in pixels along the track (using animated value for smooth movement)
   const thumbPos = useMemo(() => {
     const travel = Math.max(0, trackLength - effectiveThumbSize);
-    const valueToUse = enableEasing && !dragging
-      ? animatedValue
-      : internalValue;
+    const valueToUse =
+      enableEasing && !dragging ? animatedValue : internalValue;
     const basePos = trackStart + valueToUse * travel;
     // Add visual offset during dragging (like MUI's transform)
     return dragging ? basePos + visualOffset : basePos;
@@ -251,13 +260,13 @@ export function ScrollBar({
       const adjustedPos = pos - offset;
       const clamped = Math.max(
         trackStart,
-        Math.min(adjustedPos, trackStart + trackLength - effectiveThumbSize),
+        Math.min(adjustedPos, trackStart + trackLength - effectiveThumbSize)
       );
       const travel = Math.max(1e-6, trackLength - effectiveThumbSize);
       const next = (clamped - trackStart) / travel;
       return Math.max(0, Math.min(1, next));
     },
-    [internalValue, isHorizontal, trackStart, trackLength, effectiveThumbSize],
+    [internalValue, isHorizontal, trackStart, trackLength, effectiveThumbSize]
   );
 
   // Drag handlers for thumb (following MUI interaction pattern)
@@ -272,7 +281,8 @@ export function ScrollBar({
       const pos = isHorizontal ? local.x : local.y;
       // Calculate offset from the start of the thumb using the current actual position
       // Use internalValue (not animated) for consistent offset calculation
-      const currentThumbPos = trackStart +
+      const currentThumbPos =
+        trackStart +
         internalValue * Math.max(0, trackLength - effectiveThumbSize);
       const offset = pos - currentThumbPos;
       setDragOffset(offset);
@@ -282,7 +292,7 @@ export function ScrollBar({
       // Don't change the value on initial click, just start dragging
       // The visual position will be updated via transform in handleThumbMove
     },
-    [isHorizontal, trackStart, trackLength, effectiveThumbSize, internalValue],
+    [isHorizontal, trackStart, trackLength, effectiveThumbSize, internalValue]
   );
 
   const handleThumbUp = useCallback(() => {
@@ -293,7 +303,8 @@ export function ScrollBar({
 
     if (dragging) {
       // Calculate the final value based on the visual position
-      finalValue = internalValue +
+      finalValue =
+        internalValue +
         visualOffset / Math.max(0, trackLength - effectiveThumbSize);
       finalValue = Math.max(0, Math.min(1, finalValue));
 
@@ -337,7 +348,8 @@ export function ScrollBar({
       if (dragging) {
         // Handle thumb dragging (original behavior)
         // Calculate the visual offset from the base position (like MUI's transform)
-        const basePos = trackStart +
+        const basePos =
+          trackStart +
           internalValue * Math.max(0, trackLength - effectiveThumbSize);
         const newVisualOffset = pos - basePos - dragOffset;
 
@@ -345,7 +357,7 @@ export function ScrollBar({
         const maxOffset = Math.max(0, trackLength - effectiveThumbSize);
         const clampedOffset = Math.max(
           -basePos + trackStart,
-          Math.min(newVisualOffset, maxOffset - basePos + trackStart),
+          Math.min(newVisualOffset, maxOffset - basePos + trackStart)
         );
 
         setVisualOffset(clampedOffset);
@@ -365,7 +377,7 @@ export function ScrollBar({
           const targetPos = pos - effectiveThumbSize / 2;
           const clampedPos = Math.max(
             trackStart,
-            Math.min(targetPos, trackStart + trackLength - effectiveThumbSize),
+            Math.min(targetPos, trackStart + trackLength - effectiveThumbSize)
           );
           const travel = Math.max(1e-6, trackLength - effectiveThumbSize);
           const targetValue = (clampedPos - trackStart) / travel;
@@ -383,9 +395,8 @@ export function ScrollBar({
             targetValue,
             clampedValue,
             currentInternalValue: internalValue,
-            direction: clampedValue > lastTrackValueRef.current
-              ? "forward"
-              : "backward",
+            direction:
+              clampedValue > lastTrackValueRef.current ? "forward" : "backward",
           });
 
           // Prevent vibration by only updating if the change is significant enough
@@ -417,7 +428,7 @@ export function ScrollBar({
       pointerToValue,
       onChange,
       onTrackJump,
-    ],
+    ]
   );
 
   // Track click - move thumb to cursor position, then start repeat if held
@@ -442,7 +453,7 @@ export function ScrollBar({
           const targetPos = pos - effectiveThumbSize / 2;
           const clampedPos = Math.max(
             trackStart,
-            Math.min(targetPos, trackStart + trackLength - effectiveThumbSize),
+            Math.min(targetPos, trackStart + trackLength - effectiveThumbSize)
           );
           const travel = Math.max(1e-6, trackLength - effectiveThumbSize);
           const targetValue = (clampedPos - trackStart) / travel;
@@ -472,7 +483,7 @@ export function ScrollBar({
       trackLength,
       onTrackJump,
       onChange,
-    ],
+    ]
   );
 
   // Clear track repeat helpers
@@ -514,25 +525,16 @@ export function ScrollBar({
     >
       {/* Decrement button (left/up) */}
       <pixiContainer x={isHorizontal ? 0 : 0} y={isHorizontal ? 0 : 0}>
-        <Button
-          style={{
-            width: isHorizontal ? arrow : cross,
-            height: isHorizontal ? cross : arrow,
-            backgroundColor: 0x4a4a4a,
-            borderColor: 0x2e2e2e,
-            borderRadius: 4,
-            borderWidth: 1,
-          }}
+        <IconButton
+          width={12}
+          height={12}
+          icon={Triangle}
           onPress={onDecrement}
-        >
-          <pixiContainer x={0} y={0}>
-            <ArrowIcon
-              direction={isHorizontal ? "left" : "up"}
-              size={Math.min(arrow, cross) * 0.7}
-              color={0xffffff}
-            />
-          </pixiContainer>
-        </Button>
+          iconProps={{
+            rotation: isHorizontal ? -(Math.PI / 2) : 0,
+            size:12,
+          }}
+        />
       </pixiContainer>
 
       {/* Track */}
@@ -579,11 +581,11 @@ export function ScrollBar({
             g.clear();
             if (isHorizontal) {
               g.roundRect(0, 0, effectiveThumbSize, cross, thumbRadius).fill(
-                thumbColor,
+                thumbColor
               );
             } else {
               g.roundRect(0, 0, cross, effectiveThumbSize, thumbRadius).fill(
-                thumbColor,
+                thumbColor
               );
             }
           }}
@@ -595,25 +597,16 @@ export function ScrollBar({
         x={isHorizontal ? length - arrow : 0}
         y={isHorizontal ? 0 : length - arrow}
       >
-        <Button
-          style={{
-            width: isHorizontal ? arrow : cross,
-            height: isHorizontal ? cross : arrow,
-            backgroundColor: 0x4a4a4a,
-            borderColor: 0x2e2e2e,
-            borderRadius: 4,
-            borderWidth: 1,
-          }}
+        <IconButton
+          width={12}
+          height={12}
+          icon={Triangle}
           onPress={onIncrement}
-        >
-          <pixiContainer x={0} y={0}>
-            <ArrowIcon
-              direction={isHorizontal ? "right" : "down"}
-              size={Math.min(arrow, cross) * 0.7}
-              color={0xffffff}
-            />
-          </pixiContainer>
-        </Button>
+          iconProps={{
+            rotation: isHorizontal ? Math.PI  / 2: 0,
+            size: 12
+          }}
+        />
       </pixiContainer>
     </pixiContainer>
   );

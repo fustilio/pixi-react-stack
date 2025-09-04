@@ -43,3 +43,6 @@ export type { SliderOptions } from "./Slider";
 
 export { Viewport } from "./Viewport";
 export type { ViewportProps } from "./Viewport";
+
+export { Icon } from "./extended/icon";
+export type { IconProps } from "./extended/icon";

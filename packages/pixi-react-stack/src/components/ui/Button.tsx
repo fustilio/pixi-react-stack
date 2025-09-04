@@ -2,6 +2,7 @@ import { useCallback, useState, type ReactNode } from "react";
 import { FederatedPointerEvent, Graphics } from "pixi.js";
 
 import { useButtonEvents, type ButtonEventsProps } from "./ButtonEvents";
+import { COLORS } from "./colors";
 
 export interface ButtonProps extends ButtonEventsProps {
   /** The content to render inside the button */
@@ -103,8 +104,8 @@ export function Button({
       g.clear();
 
       const {
-        backgroundColor = 0x4caf50,
-        borderColor = 0x2e7d32,
+        backgroundColor = COLORS.GRAY[100],
+        borderColor = COLORS.GRAY[200],
         borderWidth = 2,
         borderRadius = 8,
         width = 100,
@@ -121,7 +122,7 @@ export function Button({
       }
 
       // Draw background with pressed state
-      const bgColor = isDown ? 0x388e3c : backgroundColor;
+      const bgColor = isDown ? COLORS.GRAY[200] : backgroundColor;
 
       if (borderRadius > 0) {
         g.roundRect(0, 0, width, height, borderRadius).fill(bgColor).stroke();
