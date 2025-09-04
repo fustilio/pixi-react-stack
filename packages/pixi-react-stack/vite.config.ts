@@ -21,6 +21,7 @@ export default defineConfig({
         index: path.resolve(__dirname, "src/index.ts"),
         ui: path.resolve(__dirname, "src/components/ui/index.ts"),
         layout: path.resolve(__dirname, "src/components/layout/index.ts"),
+        storybook: path.resolve(__dirname, "src/components/storybook/index.ts"),
       },
       name: "PixiReactStack",
       fileName: (format, entryName) => `${entryName}.${format}.js`,

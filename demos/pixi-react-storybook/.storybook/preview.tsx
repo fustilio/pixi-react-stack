@@ -1,7 +1,11 @@
 import { Application } from "@pixi/react";
 
-import { LayoutResizer } from "@fustilio/pixi-react-stack/layout";
 import React from "react";
+import {
+  CheckerboardView,
+  Wrapper,
+} from "@fustilio/pixi-react-stack/storybook";
+import { withApplication } from "../stories/helpers/withApplication";
 
 /** @type { import('@storybook/react-vite').Preview } */
 const preview = {
@@ -20,24 +24,7 @@ const preview = {
       test: "todo",
     },
   },
-  decorators: [
-    (Story) => {
-      return (
-        <Application
-          backgroundColor={"white"}
-          // resizeTo={window}
-          autoStart={true}
-          resolution={window.devicePixelRatio * 2}
-        >
-          <LayoutResizer>
-            {(dimensions: { width: number; height: number }) => {
-              return <Story />;
-            }}
-          </LayoutResizer>
-        </Application>
-      );
-    },
-  ],
+
 };
 
 export default preview;

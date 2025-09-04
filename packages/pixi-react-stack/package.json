@@ -12,6 +12,11 @@
       "types": "./dist/components/layout/index.d.ts",
       "import": "./dist/layout.es.js",
       "require": "./dist/layout.cjs.js"
+    },
+    "./storybook": {
+      "types": "./dist/components/storybook/index.d.ts",
+      "import": "./dist/storybook.es.js",
+      "require": "./dist/storybook.cjs.js"
     }
   },
   "scripts": {
